@@ -1,28 +1,31 @@
-from dataclasses import asdict, dataclass, field
-
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-
-@dataclass
-class Videos:
-    id: int = field()
-    titulo: str = field()
-    descricao: str = field()
-    url: str = field()
+from aluraflix_api.core.models import Video
+from aluraflix_api.core.serializers import VideoSerializer
 
 
-videos_lista = [
-    Videos(1, "Titulo 1", "Descricao 1", "https://qualquer1"),
-    Videos(2, "Titulo 2", "Descricao 2", "https://qualquer2"),
-]
-
-
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 def videos_list_create(request):
 
     if request.method == "GET":
 
-        data = [asdict(vi) for vi in videos_lista]
+        queryset = Video.objects.all()
 
-        return Response(data=data)
+        serializer = VideoSerializer(queryset, many=True)
+
+        return Response(data=serializer.data)
+
+    elif request.method == "POST":
+
+        serializer = VideoSerializer(data=request.data)
+
+        if not serializer.is_valid():
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        video = serializer.save()
+
+        serializer = VideoSerializer(instance=video)
+
+        return Response(data=serializer.data, status=status.HTTP_201_CREATED)

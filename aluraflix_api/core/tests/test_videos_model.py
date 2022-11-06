@@ -1,6 +1,10 @@
 from datetime import datetime
 
+import pytest
+
 from aluraflix_api.core.models import Video
+
+pytestmark = pytest.mark.django_db
 
 
 def test_create(video):

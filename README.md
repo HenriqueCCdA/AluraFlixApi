@@ -1,3 +1,6 @@
+## Documentação da API:
+
+[Postman](https://documenter.getpostman.com/view/18852890/2s8YYJq3D9)
 
 ## Preparando o ambiente de desenvolvimento
 
@@ -21,5 +24,3 @@ Após isto basta fazer
 ```console
 python manage.py runserver
 ```
-
-##
