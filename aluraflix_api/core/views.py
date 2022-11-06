@@ -23,6 +23,6 @@ def videos_list_create(request):
 
     if request.method == "GET":
 
-        data = [asdict(l) for l in videos_lista]
+        data = [asdict(vi) for vi in videos_lista]
 
         return Response(data=data)

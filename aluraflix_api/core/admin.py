@@ -1,3 +1,5 @@
-# from django.contrib import admin
+from django.contrib import admin
 
-# Register your models here.
+from aluraflix_api.core.models import Video
+
+admin.site.register(Video)
