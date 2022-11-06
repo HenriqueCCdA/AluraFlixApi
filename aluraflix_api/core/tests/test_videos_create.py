@@ -7,7 +7,7 @@ from aluraflix_api.core.models import Video
 pytestmark = pytest.mark.django_db
 
 
-END_POINT = "core:videos-list-create"
+END_POINT = 'core:videos-list-create'
 
 
 def test_create(client, video_info):
@@ -20,20 +20,20 @@ def test_create(client, video_info):
 
     body = resp.json()
 
-    from_db = Video.objects.get(titulo=video_info["titulo"])
+    from_db = Video.objects.get(titulo=video_info['titulo'])
 
-    assert from_db.id == body["id"]
-    assert from_db.titulo == body["titulo"]
-    assert from_db.descricao == body["descricao"]
-    assert from_db.url == body["url"]
+    assert from_db.id == body['id']
+    assert from_db.titulo == body['titulo']
+    assert from_db.descricao == body['descricao']
+    assert from_db.url == body['url']
 
 
 @pytest.mark.parametrize(
-    "field, error",
+    'field, error',
     [
-        ("titulo", {"titulo": ["Este campo é obrigatório."]}),
-        ("descricao", {"descricao": ["Este campo é obrigatório."]}),
-        ("url", {"url": ["Este campo é obrigatório."]}),
+        ('titulo', {'titulo': ['Este campo é obrigatório.']}),
+        ('descricao', {'descricao': ['Este campo é obrigatório.']}),
+        ('url', {'url': ['Este campo é obrigatório.']}),
     ],
 )
 def test_missing_field(field, error, client, video_info):
@@ -52,9 +52,9 @@ def test_missing_field(field, error, client, video_info):
 
 
 @pytest.mark.parametrize(
-    "field, value, error",
+    'field, value, error',
     [
-        ("url", "45684", {"url": ["Entrar um URL válido."]}),
+        ('url', '45684', {'url': ['Entrar um URL válido.']}),
     ],
 )
 def test_invalid_field(field, value, error, client, video_info):

@@ -1,6 +1,6 @@
 -c requirements.txt
 isort
-black
+blue
 pytest
 pytest-django
 faker

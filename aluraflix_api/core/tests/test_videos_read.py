@@ -2,7 +2,7 @@ import pytest
 from django.shortcuts import resolve_url
 from rest_framework import status
 
-END_POINT = "core:videos-read-delete-update"
+END_POINT = 'core:videos-read-delete-update'
 
 pytestmark = pytest.mark.django_db
 
@@ -17,10 +17,10 @@ def test_read(client, video):
 
     body = resp.json()
 
-    assert video.id == body["id"]
-    assert video.titulo == body["titulo"]
-    assert video.descricao == body["descricao"]
-    assert video.url == body["url"]
+    assert video.id == body['id']
+    assert video.titulo == body['titulo']
+    assert video.descricao == body['descricao']
+    assert video.url == body['url']
 
 
 def test_not_found(client):

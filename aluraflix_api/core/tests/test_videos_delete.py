@@ -4,7 +4,7 @@ from rest_framework import status
 
 from aluraflix_api.core.models import Video
 
-END_POINT = "core:videos-read-delete-update"
+END_POINT = 'core:videos-read-delete-update'
 
 pytestmark = pytest.mark.django_db
 
