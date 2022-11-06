@@ -7,8 +7,8 @@ class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
         fields = (
-            "id",
-            "titulo",
-            "descricao",
-            "url",
+            'id',
+            'titulo',
+            'descricao',
+            'url',
         )

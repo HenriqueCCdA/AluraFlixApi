@@ -3,8 +3,8 @@ from django.db import models
 
 class CreationModificationBase(models.Model):
 
-    created_at = models.DateTimeField("Criado em", auto_now_add=True)
-    modified_at = models.DateTimeField("Modificado em", auto_now=True)
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    modified_at = models.DateTimeField('Modificado em', auto_now=True)
 
     class Meta:
         abstract = True

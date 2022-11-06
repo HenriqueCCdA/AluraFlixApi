@@ -12,9 +12,7 @@ pytestmark = pytest.mark.django_db
 
 @pytest.fixture
 def video_info():
-    return dict(
-        titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url()
-    )
+    return dict(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url())
 
 
 @pytest.fixture

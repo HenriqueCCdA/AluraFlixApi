@@ -11,31 +11,31 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Video",
+            name='Video',
             fields=[
                 (
-                    "id",
+                    'id',
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name="ID",
+                        verbose_name='ID',
                     ),
                 ),
                 (
-                    "created_at",
-                    models.DateTimeField(auto_now_add=True, verbose_name="Criado em"),
+                    'created_at',
+                    models.DateTimeField(auto_now_add=True, verbose_name='Criado em'),
                 ),
                 (
-                    "modified_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Modificado em"),
+                    'modified_at',
+                    models.DateTimeField(auto_now=True, verbose_name='Modificado em'),
                 ),
-                ("titulo", models.CharField(max_length=60)),
-                ("descricao", models.TextField()),
-                ("url", models.URLField()),
+                ('titulo', models.CharField(max_length=60)),
+                ('descricao', models.TextField()),
+                ('url', models.URLField()),
             ],
             options={
-                "abstract": False,
+                'abstract': False,
             },
         ),
     ]
