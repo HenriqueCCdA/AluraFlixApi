@@ -2,6 +2,15 @@
 
 Desafio backend 5 da alura.
 
+| :placard: Vitrine.Dev |     |
+| -------------  | --- |
+| :sparkles: Nome        | `AluraFlixApi`
+| :label: Tecnologias | `Django Rest Framework`, `Python`, `Sqlite`, `Pytest`
+| :rocket: URL         | 
+| :fire: Desafio     | https://www.alura.com.br/challenges/back-end
+
+![Captura de tela de 2022-11-06 20-12-44](https://user-images.githubusercontent.com/37959973/200200609-7969a2f8-279f-4c37-93ab-c3656e828837.png?text=imagem_do_peojeto#vitrinedev)
+
 ## Documentação da API:
 
 [Postman](https://documenter.getpostman.com/view/18852890/2s8YYJq3D9)
