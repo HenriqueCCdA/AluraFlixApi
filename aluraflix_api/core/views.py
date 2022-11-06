@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -29,3 +30,24 @@ def videos_list_create(request):
         serializer = VideoSerializer(instance=video)
 
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(["GET", "DELETE"])
+def videos_read_delete_update(request, id):
+
+    try:
+        video = Video.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":
+
+        serializer = VideoSerializer(video)
+
+        return Response(data=serializer.data)
+
+    elif request.method == "DELETE":
+
+        video.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
