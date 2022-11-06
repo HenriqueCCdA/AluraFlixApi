@@ -1,3 +1,7 @@
+# Django Rest Framework API
+
+Desafio backend 5 da alura.
+
 ## Documentação da API:
 
 [Postman](https://documenter.getpostman.com/view/18852890/2s8YYJq3D9)
