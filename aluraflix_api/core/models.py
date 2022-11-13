@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import resolve
 
 
 class CreationModificationBase(models.Model):
@@ -16,6 +17,10 @@ class Categoria(CreationModificationBase):
 
     def __str__(self):
         return self.titulo
+
+    def get_absolute_url(self):
+        return f'/categorias/{self.pk}'
+        return resolve('core:')
 
 
 class Video(CreationModificationBase):

@@ -23,3 +23,8 @@ def test_create_and_modified_at(categoria):
 
 def test_one_to_many(video, categoria):
     assert categoria.videos.exists()
+
+
+def test_get_absolute_url(categoria):
+
+    assert f'/categorias/{categoria.id}' == categoria.get_absolute_url()
