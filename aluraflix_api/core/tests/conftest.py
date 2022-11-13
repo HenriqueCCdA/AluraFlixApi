@@ -2,7 +2,7 @@ import pytest
 from faker import Faker
 from rest_framework.test import APIClient
 
-from aluraflix_api.core.models import Video
+from aluraflix_api.core.models import Categoria, Video
 
 fake = Faker()
 
@@ -16,16 +16,26 @@ def video_info():
 
 
 @pytest.fixture
-def video(video_info):
-    return Video.objects.create(**video_info)
+def categoria_info():
+    return dict(titulo=fake.name(), cor='#030ff')
 
 
 @pytest.fixture
-def list_videos():
+def categoria(categoria_info):
+    return Categoria.objects.create(**categoria_info)
+
+
+@pytest.fixture
+def video(video_info, categoria):
+    return Video.objects.create(**video_info, categoria=categoria)
+
+
+@pytest.fixture
+def list_videos(categoria):
     list_ = [
-        Video(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url()),
-        Video(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url()),
-        Video(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url()),
+        Video(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
+        Video(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
+        Video(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
     ]
     Video.objects.bulk_create(list_)
 

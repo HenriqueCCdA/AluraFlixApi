@@ -16,6 +16,10 @@ def test_str(video):
     assert video.titulo == str(video)
 
 
-def test_calibration_create_and_modified_at(video):
+def test_create_and_modified_at(video):
     assert isinstance(video.created_at, datetime)
     assert isinstance(video.modified_at, datetime)
+
+
+def test_one_to_many(video, categoria):
+    assert video.categoria
