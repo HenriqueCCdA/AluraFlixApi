@@ -43,5 +43,16 @@ def list_videos(categoria):
 
 
 @pytest.fixture
+def list_categorias(categoria):
+    list_ = [
+        Categoria(titulo=fake.name(), cor='red'),
+        Categoria(titulo=fake.name(), cor='green'),
+    ]
+    Categoria.objects.bulk_create(list_)
+
+    return list(Categoria.objects.all())
+
+
+@pytest.fixture
 def client():
     return APIClient()
