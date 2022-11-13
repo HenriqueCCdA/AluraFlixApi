@@ -11,5 +11,5 @@ urlpatterns = [
     path('videos/<int:id>', videos_read_delete_update, name='videos-read-delete-update'),
     # categorias
     path('categorias/', categorias_list_create, name='categoria-list-create'),
-    # path('videos/<int:id>', videos_read_delete_update, name='videos-read-delete-update'),
+    # path('categorias/<int:id>', videos_read_delete_update, name='videos-read-delete-update'),
 ]
