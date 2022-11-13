@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -30,3 +31,24 @@ def categorias_list_create(request):
         headers = {'Location': categoria.get_absolute_url()}
 
         return Response(data=serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+@api_view(['GET', 'DELETE'])
+def categorias_read_delete_update(request, id):
+
+    try:
+        categoria = Categoria.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+
+        serializer = CategoriaSerializer(instance=categoria)
+
+        return Response(data=serializer.data)
+
+    elif request.method == 'DELETE':
+
+        categoria.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
