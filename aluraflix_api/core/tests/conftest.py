@@ -11,11 +11,6 @@ pytestmark = pytest.mark.django_db
 
 
 @pytest.fixture
-def video_info():
-    return dict(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url())
-
-
-@pytest.fixture
 def categoria_info():
     return dict(titulo=fake.name(), cor='#030ff')
 
@@ -23,6 +18,11 @@ def categoria_info():
 @pytest.fixture
 def categoria(categoria_info):
     return Categoria.objects.create(**categoria_info)
+
+
+@pytest.fixture
+def video_info(categoria):
+    return dict(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url(), categoria_id=categoria.id)
 
 
 @pytest.fixture
@@ -36,6 +36,18 @@ def list_videos(categoria):
         Video(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
         Video(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
         Video(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
+    ]
+    Video.objects.bulk_create(list_)
+
+    return list(Video.objects.all())
+
+
+@pytest.fixture
+def list_videos_fixed_title(categoria):
+    list_ = [
+        Video(titulo='Video-Jogo ', descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
+        Video(titulo='Casa da moeda', descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
+        Video(titulo='Jogo 2', descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
     ]
     Video.objects.bulk_create(list_)
 

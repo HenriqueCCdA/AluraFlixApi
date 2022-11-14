@@ -14,7 +14,7 @@ def test_create(client, video_info):
 
     url = resolve_url(END_POINT)
 
-    resp = client.post(url, data=video_info)
+    resp = client.post(url, data=video_info, format='json')
 
     assert status.HTTP_201_CREATED == resp.status_code
 
@@ -25,6 +25,29 @@ def test_create(client, video_info):
     assert from_db.id == body['id']
     assert from_db.titulo == body['titulo']
     assert from_db.descricao == body['descricao']
+    assert from_db.categoria.id == body['categoria']
+    assert from_db.url == body['url']
+
+
+def test_create_without_caregoria(client, video_info):
+
+    url = resolve_url(END_POINT)
+    video_info.pop('categoria_id')
+    resp = client.post(url, data=video_info, format='json')
+
+    assert status.HTTP_201_CREATED == resp.status_code
+
+    body = resp.json()
+
+    from_db = Video.objects.get(titulo=video_info['titulo'])
+
+    # assert 1 == from_db.categoria.id
+    assert 'LIVRE' == from_db.categoria.titulo
+
+    assert from_db.id == body['id']
+    assert from_db.titulo == body['titulo']
+    assert from_db.descricao == body['descricao']
+    assert from_db.categoria.id == body['categoria']
     assert from_db.url == body['url']
 
 
@@ -42,7 +65,7 @@ def test_missing_field(field, error, client, video_info):
 
     url = resolve_url(END_POINT)
 
-    resp = client.post(url, data=video_info)
+    resp = client.post(url, data=video_info, format='json')
 
     assert status.HTTP_400_BAD_REQUEST == resp.status_code
 
@@ -63,10 +86,23 @@ def test_invalid_field(field, value, error, client, video_info):
 
     url = resolve_url(END_POINT)
 
-    resp = client.post(url, data=video_info)
+    resp = client.post(url, data=video_info, format='json')
 
     assert status.HTTP_400_BAD_REQUEST == resp.status_code
 
     body = resp.json()
 
     assert error == body
+
+
+def test_create_wrong_caregoria(client, video_info):
+
+    url = resolve_url(END_POINT)
+    video_info['categoria_id'] = 404
+    resp = client.post(url, data=video_info, format='json')
+
+    assert status.HTTP_409_CONFLICT == resp.status_code
+
+    body = resp.json()
+
+    assert 'Categoria inválida.' == body['error']
