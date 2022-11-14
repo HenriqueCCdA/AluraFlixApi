@@ -1,9 +1,7 @@
-from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
-
 
 from aluraflix_api.core.models import Categoria
 from aluraflix_api.core.serializers import CategoriaSerializer, VideoSerializer
@@ -52,7 +50,6 @@ def categorias_read_delete_update(request, id):
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
     elif request.method in ['PUT', 'PATCH']:
 
         partial = True if request.method == 'PATCH' else False
@@ -65,6 +62,7 @@ def categorias_read_delete_update(request, id):
         serializer.update(categoria, serializer.validated_data)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 @api_view()
 def videos_by_categoria(request, id):

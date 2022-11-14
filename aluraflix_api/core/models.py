@@ -33,7 +33,6 @@ class Video(CreationModificationBase):
     def __str__(self):
         return self.titulo
 
-
     def save(self, *args, **kwargs):
 
         if self.categoria is None:

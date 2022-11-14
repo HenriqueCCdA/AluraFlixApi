@@ -39,3 +39,31 @@ def test_list_empty(client):
     assert 0 == len(body)
 
     assert [] == body
+
+
+def test_search_match(client, list_videos_fixed_title):
+
+    url = resolve_url(END_POINT)
+
+    resp = client.get(url, {'search': 'jogo'})
+
+    assert status.HTTP_200_OK == resp.status_code
+
+    body = resp.json()
+
+    assert 2 == len(body)
+
+
+def test_search_dont_match(client, list_videos_fixed_title):
+
+    url = resolve_url(END_POINT)
+
+    resp = client.get(url, {'search': 'Banana'})
+
+    assert status.HTTP_200_OK == resp.status_code
+
+    body = resp.json()
+
+    assert 0 == len(body)
+
+    assert [] == body

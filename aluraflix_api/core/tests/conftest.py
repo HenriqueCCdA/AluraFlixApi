@@ -43,6 +43,18 @@ def list_videos(categoria):
 
 
 @pytest.fixture
+def list_videos_fixed_title(categoria):
+    list_ = [
+        Video(titulo='Video-Jogo ', descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
+        Video(titulo='Casa da moeda', descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
+        Video(titulo='Jogo 2', descricao=fake.sentence(nb_words=20), url=fake.url(), categoria=categoria),
+    ]
+    Video.objects.bulk_create(list_)
+
+    return list(Video.objects.all())
+
+
+@pytest.fixture
 def list_categorias(categoria):
     list_ = [
         Categoria(titulo=fake.name(), cor='red'),

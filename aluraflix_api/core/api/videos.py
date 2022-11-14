@@ -3,8 +3,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from aluraflix_api.core.models import Video, Categoria
-from aluraflix_api.core.serializers import VideoSerializer, VideoCategoriaSerializer
+from aluraflix_api.core.models import Categoria, Video
+from aluraflix_api.core.serializers import VideoCategoriaSerializer, VideoSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -13,6 +13,9 @@ def videos_list_create(request):
     if request.method == 'GET':
 
         queryset = Video.objects.all()
+
+        if search := request.query_params.get('search'):
+            queryset = queryset.filter(titulo__icontains=search)
 
         serializer = VideoSerializer(queryset, many=True)
 

@@ -1,12 +1,11 @@
 import pytest
-
 from django.shortcuts import resolve_url
 from rest_framework import status
-
 
 END_POINT = 'core:videos-by-categoria'
 
 pytestmark = pytest.mark.django_db
+
 
 def test_list(client, list_videos, categoria):
 
