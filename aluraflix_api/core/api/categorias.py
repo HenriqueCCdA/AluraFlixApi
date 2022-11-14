@@ -33,7 +33,7 @@ def categorias_list_create(request):
         return Response(data=serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-@api_view(['GET', 'DELETE'])
+@api_view(['GET', 'DELETE', 'PUT', 'PATCH'])
 def categorias_read_delete_update(request, id):
 
     try:
@@ -50,5 +50,19 @@ def categorias_read_delete_update(request, id):
     elif request.method == 'DELETE':
 
         categoria.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+    elif request.method in ['PUT', 'PATCH']:
+
+        partial = True if request.method == 'PATCH' else False
+
+        serializer = CategoriaSerializer(data=request.data, partial=partial)
+
+        if not serializer.is_valid():
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer.update(categoria, serializer.validated_data)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
