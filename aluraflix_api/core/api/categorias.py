@@ -2,9 +2,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+
 
 from aluraflix_api.core.models import Categoria
-from aluraflix_api.core.serializers import CategoriaSerializer
+from aluraflix_api.core.serializers import CategoriaSerializer, VideoSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -36,10 +38,7 @@ def categorias_list_create(request):
 @api_view(['GET', 'DELETE', 'PUT', 'PATCH'])
 def categorias_read_delete_update(request, id):
 
-    try:
-        categoria = Categoria.objects.get(id=id)
-    except ObjectDoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    categoria = get_object_or_404(Categoria, id=id)
 
     if request.method == 'GET':
 
@@ -66,3 +65,14 @@ def categorias_read_delete_update(request, id):
         serializer.update(categoria, serializer.validated_data)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view()
+def videos_by_categoria(request, id):
+
+    categoria = get_object_or_404(Categoria, id=id)
+
+    queryset = categoria.videos.all()
+
+    serialize = VideoSerializer(queryset, many=True)
+
+    return Response(data=serialize.data)

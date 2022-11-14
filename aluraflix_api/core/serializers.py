@@ -11,6 +11,7 @@ class VideoSerializer(serializers.ModelSerializer):
             'titulo',
             'descricao',
             'url',
+            'categoria'
         )
 
 

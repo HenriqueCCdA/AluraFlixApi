@@ -25,6 +25,7 @@ def test_create(client, video_info):
     assert from_db.id == body['id']
     assert from_db.titulo == body['titulo']
     assert from_db.descricao == body['descricao']
+    # assert from_db.categoria.id == body['categoria']
     assert from_db.url == body['url']
 
 
