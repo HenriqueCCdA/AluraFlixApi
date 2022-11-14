@@ -14,7 +14,7 @@ def test_create(client, categoria_info):
 
     url = resolve_url(END_POINT)
 
-    resp = client.post(url, data=categoria_info)
+    resp = client.post(url, data=categoria_info, format='json')
 
     assert status.HTTP_201_CREATED == resp.status_code
 
@@ -44,7 +44,7 @@ def test_missing_field(field, error, client, categoria_info):
 
     url = resolve_url(END_POINT)
 
-    resp = client.post(url, data=categoria_info)
+    resp = client.post(url, data=categoria_info, format='json')
 
     assert status.HTTP_400_BAD_REQUEST == resp.status_code
 

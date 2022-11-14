@@ -3,8 +3,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from aluraflix_api.core.models import Video
-from aluraflix_api.core.serializers import VideoSerializer
+from aluraflix_api.core.models import Video, Categoria
+from aluraflix_api.core.serializers import VideoSerializer, VideoCategoriaSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -20,7 +20,18 @@ def videos_list_create(request):
 
     elif request.method == 'POST':
 
-        serializer = VideoSerializer(data=request.data)
+        data = request.data
+
+        serializer = VideoCategoriaSerializer(data=data)
+
+        if serializer.is_valid():
+            try:
+                categoria = Categoria.objects.get(id=serializer.data['categoria_id'])
+                data['categoria'] = categoria.pk
+            except ObjectDoesNotExist:
+                return Response(data={'error': 'Categoria inválida.'}, status=status.HTTP_409_CONFLICT)
+
+        serializer = VideoSerializer(data=data)
 
         if not serializer.is_valid():
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)

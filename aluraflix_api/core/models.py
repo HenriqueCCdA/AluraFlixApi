@@ -32,3 +32,12 @@ class Video(CreationModificationBase):
 
     def __str__(self):
         return self.titulo
+
+
+    def save(self, *args, **kwargs):
+
+        if self.categoria is None:
+            categoria_livre, _ = Categoria.objects.get_or_create(titulo='LIVRE')
+            self.categoria = categoria_livre
+
+        super().save(*args, **kwargs)

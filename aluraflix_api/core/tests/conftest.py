@@ -11,11 +11,6 @@ pytestmark = pytest.mark.django_db
 
 
 @pytest.fixture
-def video_info():
-    return dict(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url())
-
-
-@pytest.fixture
 def categoria_info():
     return dict(titulo=fake.name(), cor='#030ff')
 
@@ -23,6 +18,11 @@ def categoria_info():
 @pytest.fixture
 def categoria(categoria_info):
     return Categoria.objects.create(**categoria_info)
+
+
+@pytest.fixture
+def video_info(categoria):
+    return dict(titulo=fake.name(), descricao=fake.sentence(nb_words=20), url=fake.url(), categoria_id=categoria.id)
 
 
 @pytest.fixture
