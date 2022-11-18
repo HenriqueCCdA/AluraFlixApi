@@ -1,5 +1,6 @@
 django
 djangorestframework
 python-decouple
-psycopg2
+psycopg2-binary
 dj_database_url
+gunicorn

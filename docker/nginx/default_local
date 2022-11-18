@@ -1,0 +1,12 @@
+server {
+    server_name               localhost;
+    listen                    80;
+
+    location / {
+        proxy_pass            http://localhost:8000;
+    }
+
+    location /static {
+        alias            /var/www/site/static/;
+    }
+}
