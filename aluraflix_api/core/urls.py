@@ -1,4 +1,5 @@
 from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .api.categorias import (
     categorias_list_create,
@@ -10,6 +11,8 @@ from .api.videos import videos_list_create, videos_read_delete_update
 app_name = 'core'
 
 urlpatterns = [
+    # login
+    path('login/', TokenObtainPairView.as_view(), name='login'),
     # videos
     path('videos/', videos_list_create, name='videos-list-create'),
     path('videos/<int:id>', videos_read_delete_update, name='videos-read-delete-update'),

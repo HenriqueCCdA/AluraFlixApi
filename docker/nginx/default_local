@@ -3,10 +3,11 @@ server {
     listen                    80;
 
     location / {
+        proxy_set_header      Host $host;
         proxy_pass            http://localhost:8000;
     }
 
     location /static {
-        alias            /var/www/site/static/;
+        root            /var/www/site/static/;
     }
 }
