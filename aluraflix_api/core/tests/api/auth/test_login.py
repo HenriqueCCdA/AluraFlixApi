@@ -1,21 +1,13 @@
 import pytest
-from django.contrib.auth import get_user_model
 from django.shortcuts import resolve_url
 from rest_framework import status
-
-User = get_user_model()
 
 pytestmark = pytest.mark.django_db
 
 ENDPOINT = 'core:login'
 
 
-@pytest.fixture
-def user():
-    return User.objects.create_user(username='user1', email='user1@email.com', password='123456!!')
-
-
-def test_login(client, user):
+def test_ok(client, user):
 
     url = resolve_url(ENDPOINT)
 

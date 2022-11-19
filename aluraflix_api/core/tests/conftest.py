@@ -1,4 +1,5 @@
 import pytest
+from django.contrib.auth import get_user_model
 from faker import Faker
 from rest_framework.test import APIClient
 
@@ -7,7 +8,14 @@ from aluraflix_api.core.models import Categoria, Video
 fake = Faker()
 
 
+User = get_user_model()
+
 pytestmark = pytest.mark.django_db
+
+
+@pytest.fixture
+def user():
+    return User.objects.create_user(username='user1', email='user1@email.com', password='123456!!')
 
 
 @pytest.fixture
