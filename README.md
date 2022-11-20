@@ -65,7 +65,7 @@ DATABASE_URL=postgres://aluratube:aluratube@localhost:5435/aluratube
 Para subir o o `db` basta executar o `docker-compose` abaixo. O banco irá ficar disponivel na porta `5435`. Note que as configurações do banco estão na variavel `DATABASE_URL`
 
 ```console
-docker-compose -f docker-compose-db.yml up -d
+docker-compose -f docker/docker-compose.yml up -d postgres
 ```
 
 ## Usando o sqlite

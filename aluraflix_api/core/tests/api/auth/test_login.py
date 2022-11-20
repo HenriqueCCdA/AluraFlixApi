@@ -7,13 +7,11 @@ pytestmark = pytest.mark.django_db
 ENDPOINT = 'core:login'
 
 
-def test_ok(client, user):
+def test_ok(client, user, login_info):
 
     url = resolve_url(ENDPOINT)
 
-    data = {'username': 'user1', 'password': '123456!!'}
-
-    resp = client.post(url, data=data, format='json')
+    resp = client.post(url, data=login_info, format='json')
 
     assert status.HTTP_200_OK == resp.status_code
 
@@ -42,7 +40,7 @@ def test_wrong_credentials(client, user):
 
     url = resolve_url(ENDPOINT)
 
-    data = {'username': 'user', 'password': '123456!!'}
+    data = {'username': 'user', 'password': '123456!'}
 
     resp = client.post(url, data=data, format='json')
 

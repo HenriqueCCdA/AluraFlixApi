@@ -10,11 +10,11 @@ pytestmark = pytest.mark.django_db
 END_POINT = 'core:videos-list-create'
 
 
-def test_create(client, video_info):
+def test_create(client_auth, video_info):
 
     url = resolve_url(END_POINT)
 
-    resp = client.post(url, data=video_info, format='json')
+    resp = client_auth.post(url, data=video_info, format='json')
 
     assert status.HTTP_201_CREATED == resp.status_code
 
@@ -29,11 +29,11 @@ def test_create(client, video_info):
     assert from_db.url == body['url']
 
 
-def test_create_without_caregoria(client, video_info):
+def test_create_without_caregoria(client_auth, video_info):
 
     url = resolve_url(END_POINT)
     video_info.pop('categoria_id')
-    resp = client.post(url, data=video_info, format='json')
+    resp = client_auth.post(url, data=video_info, format='json')
 
     assert status.HTTP_201_CREATED == resp.status_code
 
@@ -59,13 +59,13 @@ def test_create_without_caregoria(client, video_info):
         ('url', {'url': ['Este campo é obrigatório.']}),
     ],
 )
-def test_missing_field(field, error, client, video_info):
+def test_missing_field(field, error, client_auth, video_info):
 
     video_info.pop(field)
 
     url = resolve_url(END_POINT)
 
-    resp = client.post(url, data=video_info, format='json')
+    resp = client_auth.post(url, data=video_info, format='json')
 
     assert status.HTTP_400_BAD_REQUEST == resp.status_code
 
@@ -80,13 +80,13 @@ def test_missing_field(field, error, client, video_info):
         ('url', '45684', {'url': ['Entrar um URL válido.']}),
     ],
 )
-def test_invalid_field(field, value, error, client, video_info):
+def test_invalid_field(field, value, error, client_auth, video_info):
 
     video_info[field] = value
 
     url = resolve_url(END_POINT)
 
-    resp = client.post(url, data=video_info, format='json')
+    resp = client_auth.post(url, data=video_info, format='json')
 
     assert status.HTTP_400_BAD_REQUEST == resp.status_code
 
@@ -95,11 +95,11 @@ def test_invalid_field(field, value, error, client, video_info):
     assert error == body
 
 
-def test_create_wrong_caregoria(client, video_info):
+def test_create_wrong_caregoria(client_auth, video_info):
 
     url = resolve_url(END_POINT)
     video_info['categoria_id'] = 404
-    resp = client.post(url, data=video_info, format='json')
+    resp = client_auth.post(url, data=video_info, format='json')
 
     assert status.HTTP_409_CONFLICT == resp.status_code
 

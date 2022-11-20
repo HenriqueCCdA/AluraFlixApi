@@ -10,11 +10,6 @@ pytestmark = pytest.mark.django_db
 ENDPOINT = 'core:register'
 
 
-@pytest.fixture
-def user_register():
-    return {'username': 'user1', 'password': '123456!!', 'password2': '123456!!', 'email': 'user1@email.com'}
-
-
 def test_ok(client, user_register):
 
     url = resolve_url(ENDPOINT)

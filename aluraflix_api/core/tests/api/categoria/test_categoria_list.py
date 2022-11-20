@@ -7,11 +7,11 @@ END_POINT = 'core:categoria-list-create'
 pytestmark = pytest.mark.django_db
 
 
-def test_list(client, list_categorias):
+def test_list(client_auth, list_categorias):
 
     url = resolve_url(END_POINT)
 
-    resp = client.get(url)
+    resp = client_auth.get(url)
 
     assert status.HTTP_200_OK == resp.status_code
 
@@ -25,11 +25,11 @@ def test_list(client, list_categorias):
         assert from_db.cor == from_api['cor']
 
 
-def test_list_empty(client):
+def test_list_empty(client_auth):
 
     url = resolve_url(END_POINT)
 
-    resp = client.get(url)
+    resp = client_auth.get(url)
 
     assert status.HTTP_200_OK == resp.status_code
 
