@@ -1,0 +1,41 @@
+services:
+
+  backend:
+    image: backend/alura_flix:1.0
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    network_mode: "host"
+    command: >
+      sh -c "python manage.py migrate
+      && python manage.py collectstatic --noinput
+      && gunicorn --workers=3 --threads=2 aluraflix_api.wsgi:application -b 0.0.0.0:8000 --access-logfile -"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./staticfiles:/user/app/staticfiles
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: alura_tube_db
+    image: postgres:14.5-alpine
+    restart: 'no'
+    volumes:
+      - ./db/pgdata:/var/lib/postgresql/data
+    environment:
+      - LC_ALL=C.UTF-8
+      - POSTGRES_PASSWORD=aluratube
+      - POSTGRES_USER=aluratube
+    ports:
+      - 5435:5432
+
+  nginx:
+    container_name: nginx
+    image: nginx:1.23.2-alpine
+    restart: 'no'
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./staticfiles:/var/www/site/staticfiles
+    network_mode: "host"

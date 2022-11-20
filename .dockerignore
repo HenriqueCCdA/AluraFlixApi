@@ -1,0 +1,13 @@
+db
+.venv
+.vscode
+.pytest_cache
+.github
+contrib
+.gitignore
+.env
+.pre-commit-config.yaml
+README.md
+requirements-dev.in
+requirements.in
+tox.ini
