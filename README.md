@@ -5,7 +5,7 @@ Desafio backend 5 da alura.
 | :placard: Vitrine.Dev |     |
 | -------------  | --- |
 | :sparkles: Nome        | `AluraFlixApi`
-| :label: Tecnologias | `Django Rest Framework`, `Python`, `Sqlite`, `Pytest`
+| :label: Tecnologias | `Django Rest Framework`, `Python`, `Postgres`, `Pytest`
 | :rocket: URL         |
 | :fire: Desafio     | https://www.alura.com.br/challenges/back-end
 
@@ -21,9 +21,9 @@ Index
     - [Rodando os testes](#rodando-os-testes)
 
 
-## Documentação da API:
+## Documentação e Rodas da API:
 
-[Postman](https://documenter.getpostman.com/view/18852890/2s8YYJq3D9)
+🟠🟠🟠🟠🟠[Postman - Rotas](https://documenter.getpostman.com/view/18852890/2s8YYJq3D9)🟠🟠🟠🟠🟠
 
 ## Preparando o ambiente de desenvolvimento
 
@@ -65,7 +65,7 @@ DATABASE_URL=postgres://aluratube:aluratube@localhost:5435/aluratube
 Para subir o o `db` basta executar o `docker-compose` abaixo. O banco irá ficar disponivel na porta `5435`. Note que as configurações do banco estão na variavel `DATABASE_URL`
 
 ```console
-docker-compose -f docker/docker-compose.yml up -d postgres
+docker-compose up -d postgres
 ```
 
 ## Usando o sqlite
