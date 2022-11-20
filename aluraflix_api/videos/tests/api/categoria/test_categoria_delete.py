@@ -2,9 +2,9 @@ import pytest
 from django.shortcuts import resolve_url
 from rest_framework import status
 
-from aluraflix_api.core.models import Categoria
+from aluraflix_api.videos.models import Categoria
 
-END_POINT = 'core:categoria-read-delete-update'
+END_POINT = 'videos:categoria-read-delete-update'
 
 pytestmark = pytest.mark.django_db
 

@@ -2,7 +2,7 @@ import pytest
 from django.shortcuts import resolve_url
 from rest_framework import status
 
-END_POINT = 'core:videos-by-categoria'
+END_POINT = 'videos:videos-by-categoria'
 
 pytestmark = pytest.mark.django_db
 

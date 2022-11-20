@@ -2,7 +2,7 @@ import pytest
 from django.shortcuts import resolve_url
 from rest_framework import status
 
-END_POINT = 'core:videos-list-create'
+END_POINT = 'videos:videos-list-create'
 
 pytestmark = pytest.mark.django_db
 

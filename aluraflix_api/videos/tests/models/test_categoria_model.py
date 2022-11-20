@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pytest
 
-from aluraflix_api.core.models import Categoria
+from aluraflix_api.videos.models import Categoria
 
 pytestmark = pytest.mark.django_db
 

@@ -2,12 +2,12 @@ import pytest
 from django.shortcuts import resolve_url
 from rest_framework import status
 
-from aluraflix_api.core.models import Categoria
+from aluraflix_api.videos.models import Categoria
 
 pytestmark = pytest.mark.django_db
 
 
-END_POINT = 'core:categoria-list-create'
+END_POINT = 'videos:categoria-list-create'
 
 
 def test_create(client_auth, categoria_info):

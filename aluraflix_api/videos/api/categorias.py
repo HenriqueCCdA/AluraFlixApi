@@ -3,8 +3,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from aluraflix_api.core.models import Categoria
-from aluraflix_api.core.serializers import CategoriaSerializer, VideoSerializer
+from aluraflix_api.videos.models import Categoria
+from aluraflix_api.videos.serializers import CategoriaSerializer, VideoSerializer
 
 
 @api_view(['GET', 'POST'])

@@ -2,14 +2,14 @@ import pytest
 from django.shortcuts import resolve_url
 from rest_framework import status
 
-END_POINT = 'core:videos-read-delete-update'
+END_POINT = 'videos:categoria-read-delete-update'
 
 pytestmark = pytest.mark.django_db
 
 
-def test_read(client_auth, video):
+def test_read(client_auth, categoria):
 
-    url = resolve_url(END_POINT, video.id)
+    url = resolve_url(END_POINT, categoria.id)
 
     resp = client_auth.get(url)
 
@@ -17,10 +17,9 @@ def test_read(client_auth, video):
 
     body = resp.json()
 
-    assert video.id == body['id']
-    assert video.titulo == body['titulo']
-    assert video.descricao == body['descricao']
-    assert video.url == body['url']
+    assert categoria.id == body['id']
+    assert categoria.titulo == body['titulo']
+    assert categoria.cor == body['cor']
 
 
 def test_not_found(client_auth):

@@ -2,27 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
-from aluraflix_api.core.models import Categoria, Video
-
 User = get_user_model()
-
-
-class VideoCategoriaSerializer(serializers.Serializer):
-    categoria_id = serializers.IntegerField()
-
-
-class VideoSerializer(serializers.ModelSerializer):
-    # categoria_id = serializers.PrimaryKeyRelatedField(many=True, allow_null=True, required=False)
-
-    class Meta:
-        model = Video
-        fields = ('id', 'titulo', 'descricao', 'url', 'categoria')
-
-
-class CategoriaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Categoria
-        fields = ('id', 'titulo', 'cor')
 
 
 class RegisterSerializer(serializers.ModelSerializer):
