@@ -4,7 +4,7 @@ from faker import Faker
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from aluraflix_api.core.models import Categoria, Video
+from aluraflix_api.videos.models import Categoria, Video
 
 fake = Faker()
 

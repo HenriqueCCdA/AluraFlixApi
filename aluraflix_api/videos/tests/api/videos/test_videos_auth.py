@@ -7,7 +7,7 @@ pytestmark = pytest.mark.django_db
 
 def test_list_create_no_token(client, video_info):
 
-    url = resolve_url('core:videos-list-create')
+    url = resolve_url('videos:videos-list-create')
 
     resp = client.post(url, data=video_info, format='json')
 
@@ -22,7 +22,7 @@ def test_list_create_invalid_token(client, video_info):
 
     client.credentials(HTTP_AUTHORIZATION='Bearer ss')
 
-    url = resolve_url('core:videos-list-create')
+    url = resolve_url('videos:videos-list-create')
 
     resp = client.post(url, data=video_info, format='json')
 
@@ -43,7 +43,7 @@ def test_list_create_invalid_token(client, video_info):
 
 def test_read_delete_update_no_token(client, video, video_info):
 
-    url = resolve_url('core:videos-read-delete-update', video.id)
+    url = resolve_url('videos:videos-read-delete-update', video.id)
 
     resp = client.post(url, data=video_info, format='json')
 
@@ -58,7 +58,7 @@ def test_read_delete_update_invalid_token(client, video, video_info):
 
     client.credentials(HTTP_AUTHORIZATION='Bearer ss')
 
-    url = resolve_url('core:videos-read-delete-update', video.id)
+    url = resolve_url('videos:videos-read-delete-update', video.id)
 
     resp = client.post(url, data=video_info, format='json')
 
