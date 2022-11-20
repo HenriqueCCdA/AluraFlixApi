@@ -10,16 +10,13 @@ pytestmark = pytest.mark.django_db
 END_POINT = 'core:categoria-read-delete-update'
 
 
-def test_full_update(client, categoria):
+def test_full_update(client_auth, categoria):
 
     url = resolve_url(END_POINT, categoria.id)
 
-    data = {
-        'titulo': fake.name(),
-        'cor': 'red',
-    }
+    data = {'titulo': fake.name(), 'cor': 'red'}
 
-    resp = client.put(url, data=data)
+    resp = client_auth.put(url, data=data)
 
     assert status.HTTP_204_NO_CONTENT == resp.status_code
 
@@ -37,11 +34,11 @@ def test_full_update(client, categoria):
         ('cor', 'Red'),
     ],
 )
-def test_partial_update(field, value, client, categoria):
+def test_partial_update(field, value, client_auth, categoria):
 
     url = resolve_url(END_POINT, categoria.id)
 
-    resp = client.patch(url, data={field: value})
+    resp = client_auth.patch(url, data={field: value})
 
     assert status.HTTP_204_NO_CONTENT == resp.status_code
 
@@ -57,13 +54,13 @@ def test_partial_update(field, value, client, categoria):
         ('cor', {'cor': ['Este campo é obrigatório.']}),
     ],
 )
-def test_missing_field_in_full_update(field, error, client, categoria_info, categoria):
+def test_missing_field_in_full_update(field, error, client_auth, categoria_info, categoria):
 
     categoria_info.pop(field)
 
     url = resolve_url(END_POINT, categoria.id)
 
-    resp = client.put(url, data=categoria_info)
+    resp = client_auth.put(url, data=categoria_info)
 
     assert status.HTTP_400_BAD_REQUEST == resp.status_code
 
@@ -72,14 +69,14 @@ def test_missing_field_in_full_update(field, error, client, categoria_info, cate
     assert error == body
 
 
-def test_not_found(client):
+def test_not_found(client_auth):
 
     url = resolve_url(END_POINT, 404)
 
-    resp = client.put(url)
+    resp = client_auth.put(url)
 
     assert status.HTTP_404_NOT_FOUND == resp.status_code
 
-    resp = client.patch(url)
+    resp = client_auth.patch(url)
 
     assert status.HTTP_404_NOT_FOUND == resp.status_code

@@ -7,11 +7,11 @@ END_POINT = 'core:videos-list-create'
 pytestmark = pytest.mark.django_db
 
 
-def test_list(client, list_videos):
+def test_list(client_auth, list_videos):
 
     url = resolve_url(END_POINT)
 
-    resp = client.get(url)
+    resp = client_auth.get(url)
 
     assert status.HTTP_200_OK == resp.status_code
 
@@ -26,11 +26,11 @@ def test_list(client, list_videos):
         assert from_db.url == from_api['url']
 
 
-def test_list_empty(client):
+def test_list_empty(client_auth):
 
     url = resolve_url(END_POINT)
 
-    resp = client.get(url)
+    resp = client_auth.get(url)
 
     assert status.HTTP_200_OK == resp.status_code
 
@@ -41,11 +41,11 @@ def test_list_empty(client):
     assert [] == body
 
 
-def test_search_match(client, list_videos_fixed_title):
+def test_search_match(client_auth, list_videos_fixed_title):
 
     url = resolve_url(END_POINT)
 
-    resp = client.get(url, {'search': 'jogo'})
+    resp = client_auth.get(url, {'search': 'jogo'})
 
     assert status.HTTP_200_OK == resp.status_code
 
@@ -54,11 +54,11 @@ def test_search_match(client, list_videos_fixed_title):
     assert 2 == len(body)
 
 
-def test_search_dont_match(client, list_videos_fixed_title):
+def test_search_dont_match(client_auth, list_videos_fixed_title):
 
     url = resolve_url(END_POINT)
 
-    resp = client.get(url, {'search': 'Banana'})
+    resp = client_auth.get(url, {'search': 'Banana'})
 
     assert status.HTTP_200_OK == resp.status_code
 

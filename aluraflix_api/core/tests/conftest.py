@@ -2,6 +2,7 @@ import pytest
 from django.contrib.auth import get_user_model
 from faker import Faker
 from rest_framework.test import APIClient
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from aluraflix_api.core.models import Categoria, Video
 
@@ -14,8 +15,23 @@ pytestmark = pytest.mark.django_db
 
 
 @pytest.fixture
-def user():
-    return User.objects.create_user(username='user1', email='user1@email.com', password='123456!!')
+def user_register():
+    profile = fake.simple_profile()
+
+    password = fake.password()
+    return {'username': profile['username'], 'password': password, 'password2': password, 'email': profile['mail']}
+
+
+@pytest.fixture
+def user(user_register):
+    return User.objects.create_user(
+        username=user_register['username'], email=user_register['email'], password=user_register['password']
+    )
+
+
+@pytest.fixture
+def login_info(user_register):
+    return dict(username=user_register['username'], email=user_register['email'], password=user_register['password'])
 
 
 @pytest.fixture
@@ -76,3 +92,14 @@ def list_categorias(categoria):
 @pytest.fixture
 def client():
     return APIClient()
+
+
+@pytest.fixture
+def client_auth(user):
+
+    refresh = RefreshToken.for_user(user)
+
+    client = APIClient()
+    client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
+
+    return client

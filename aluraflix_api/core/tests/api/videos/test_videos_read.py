@@ -7,11 +7,11 @@ END_POINT = 'core:videos-read-delete-update'
 pytestmark = pytest.mark.django_db
 
 
-def test_read(client, video):
+def test_read(client_auth, video):
 
     url = resolve_url(END_POINT, video.id)
 
-    resp = client.get(url)
+    resp = client_auth.get(url)
 
     assert status.HTTP_200_OK == resp.status_code
 
@@ -23,10 +23,10 @@ def test_read(client, video):
     assert video.url == body['url']
 
 
-def test_not_found(client):
+def test_not_found(client_auth):
 
     url = resolve_url(END_POINT, 404)
 
-    resp = client.get(url)
+    resp = client_auth.get(url)
 
     assert status.HTTP_404_NOT_FOUND == resp.status_code

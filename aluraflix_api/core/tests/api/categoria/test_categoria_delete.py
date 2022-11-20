@@ -9,21 +9,21 @@ END_POINT = 'core:categoria-read-delete-update'
 pytestmark = pytest.mark.django_db
 
 
-def test_read(client, categoria):
+def test_read(client_auth, categoria):
 
     url = resolve_url(END_POINT, categoria.id)
 
-    resp = client.delete(url)
+    resp = client_auth.delete(url)
 
     assert status.HTTP_204_NO_CONTENT == resp.status_code
 
     assert not Categoria.objects.filter(id=categoria.id).exists()
 
 
-def test_not_found(client):
+def test_not_found(client_auth):
 
     url = resolve_url(END_POINT, 404)
 
-    resp = client.delete(url)
+    resp = client_auth.delete(url)
 
     assert status.HTTP_404_NOT_FOUND == resp.status_code

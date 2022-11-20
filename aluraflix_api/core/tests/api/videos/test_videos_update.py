@@ -10,7 +10,7 @@ pytestmark = pytest.mark.django_db
 END_POINT = 'core:videos-read-delete-update'
 
 
-def test_full_update(client, video):
+def test_full_update(client_auth, video):
 
     url = resolve_url(END_POINT, video.id)
 
@@ -20,7 +20,7 @@ def test_full_update(client, video):
         'url': fake.url(),
     }
 
-    resp = client.put(url, data=data)
+    resp = client_auth.put(url, data=data)
 
     assert status.HTTP_204_NO_CONTENT == resp.status_code
 
@@ -40,11 +40,11 @@ def test_full_update(client, video):
         ('url', 'https://www.new.com'),
     ],
 )
-def test_partial_update(field, value, client, video):
+def test_partial_update(field, value, client_auth, video):
 
     url = resolve_url(END_POINT, video.id)
 
-    resp = client.patch(url, data={field: value})
+    resp = client_auth.patch(url, data={field: value})
 
     assert status.HTTP_204_NO_CONTENT == resp.status_code
 
@@ -61,13 +61,13 @@ def test_partial_update(field, value, client, video):
         ('url', {'url': ['Este campo é obrigatório.']}),
     ],
 )
-def test_missing_field_in_full_update(field, error, client, video_info, video):
+def test_missing_field_in_full_update(field, error, client_auth, video_info, video):
 
     video_info.pop(field)
 
     url = resolve_url(END_POINT, video.id)
 
-    resp = client.put(url, data=video_info)
+    resp = client_auth.put(url, data=video_info)
 
     assert status.HTTP_400_BAD_REQUEST == resp.status_code
 
@@ -82,7 +82,7 @@ def test_missing_field_in_full_update(field, error, client, video_info, video):
         ('url', '45684', {'url': ['Entrar um URL válido.']}),
     ],
 )
-def test_invalid_field(field, value, error, client, video_info, video):
+def test_invalid_field(field, value, error, client_auth, video_info, video):
 
     video_info[field] = value
 
@@ -90,7 +90,7 @@ def test_invalid_field(field, value, error, client, video_info, video):
 
     # full update
 
-    resp = client.put(url, data=video_info)
+    resp = client_auth.put(url, data=video_info)
 
     assert status.HTTP_400_BAD_REQUEST == resp.status_code
 
@@ -100,7 +100,7 @@ def test_invalid_field(field, value, error, client, video_info, video):
 
     # partial update
 
-    resp = client.patch(url, data=video_info)
+    resp = client_auth.patch(url, data=video_info)
 
     assert status.HTTP_400_BAD_REQUEST == resp.status_code
 
@@ -109,14 +109,14 @@ def test_invalid_field(field, value, error, client, video_info, video):
     assert error == body
 
 
-def test_not_found(client):
+def test_not_found(client_auth):
 
     url = resolve_url(END_POINT, 404)
 
-    resp = client.put(url)
+    resp = client_auth.put(url)
 
     assert status.HTTP_404_NOT_FOUND == resp.status_code
 
-    resp = client.patch(url)
+    resp = client_auth.patch(url)
 
     assert status.HTTP_404_NOT_FOUND == resp.status_code

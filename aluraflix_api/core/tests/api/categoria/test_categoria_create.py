@@ -10,11 +10,11 @@ pytestmark = pytest.mark.django_db
 END_POINT = 'core:categoria-list-create'
 
 
-def test_create(client, categoria_info):
+def test_create(client_auth, categoria_info):
 
     url = resolve_url(END_POINT)
 
-    resp = client.post(url, data=categoria_info, format='json')
+    resp = client_auth.post(url, data=categoria_info, format='json')
 
     assert status.HTTP_201_CREATED == resp.status_code
 
@@ -38,13 +38,13 @@ def test_create(client, categoria_info):
         ('cor', {'cor': ['Este campo é obrigatório.']}),
     ],
 )
-def test_missing_field(field, error, client, categoria_info):
+def test_missing_field(field, error, client_auth, categoria_info):
 
     categoria_info.pop(field)
 
     url = resolve_url(END_POINT)
 
-    resp = client.post(url, data=categoria_info, format='json')
+    resp = client_auth.post(url, data=categoria_info, format='json')
 
     assert status.HTTP_400_BAD_REQUEST == resp.status_code
 

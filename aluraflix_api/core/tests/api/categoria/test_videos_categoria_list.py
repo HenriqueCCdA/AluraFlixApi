@@ -7,11 +7,11 @@ END_POINT = 'core:videos-by-categoria'
 pytestmark = pytest.mark.django_db
 
 
-def test_list(client, list_videos, categoria):
+def test_list(client_auth, list_videos, categoria):
 
     url = resolve_url(END_POINT, categoria.pk)
 
-    resp = client.get(url)
+    resp = client_auth.get(url)
 
     assert status.HTTP_200_OK == resp.status_code
 
@@ -26,11 +26,11 @@ def test_list(client, list_videos, categoria):
         assert db.descricao == response['descricao']
 
 
-def test_list_empty(client, categoria):
+def test_list_empty(client_auth, categoria):
 
     url = resolve_url(END_POINT, categoria.pk)
 
-    resp = client.get(url)
+    resp = client_auth.get(url)
 
     assert status.HTTP_200_OK == resp.status_code
 
@@ -41,10 +41,10 @@ def test_list_empty(client, categoria):
     assert [] == body
 
 
-def test_not_found(client):
+def test_not_found(client_auth):
 
     url = resolve_url(END_POINT, 404)
 
-    resp = client.get(url)
+    resp = client_auth.get(url)
 
     assert status.HTTP_404_NOT_FOUND == resp.status_code
