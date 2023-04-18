@@ -9,7 +9,7 @@ Desafio backend 5 da alura.
 | :rocket: URL         |
 | :fire: Desafio     | https://www.alura.com.br/challenges/back-end
 
-![Captura de tela de 2022-11-06 20-12-44](https://user-images.githubusercontent.com/37959973/200200609-7969a2f8-279f-4c37-93ab-c3656e828837.png?text=imagem_do_peojeto#vitrinedev)
+![Captura de tela de 2022-11-06 20-12-44](https://user-images.githubusercontent.com/37959973/200200609-7969a2f8-279f-4c37-93ab-c3656e828837.png?text=imagem_do_projeto#vitrinedev)
 
 Index
     - [Documentação da  API](#documentação-da-api)
